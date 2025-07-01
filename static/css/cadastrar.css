@@ -1,0 +1,202 @@
+/* Estilo Geral da Página */
+body {
+    background-color: #e7f0fd; /* Azul bem claro para o fundo da página */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.container-fluid {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* Card Principal do Formulário */
+.shared-form-style {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid #0d6efd;
+    transition: all 0.3s ease-in-out;
+}
+
+.shared-form-style:hover {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+}
+
+/* Cabeçalho do Formulário */
+.form-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #cfe2ff;
+}
+
+.form-header-container h2 {
+    font-weight: 700;
+    color: #0b5ed7;
+    font-size: 1.9rem;
+}
+
+.form-header-container a.btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    font-weight: 600;
+    color: #0b5ed7;
+    border-color: #0b5ed7;
+}
+
+.form-header-container a.btn:hover {
+    background-color: #0b5ed7;
+    color: #fff;
+}
+
+/* Títulos de Seção */
+h4.border-top {
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0b5ed7;
+    border-top: 2px solid #cfe2ff;
+}
+
+/* Labels dos Campos */
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.required-field::after {
+    content: " *";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Inputs e Selects */
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.7rem 1rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    height: calc(1.5em + 1.5rem + 2px);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Placeholder cinza claro */
+.form-control::placeholder {
+    color: #aab2bd;
+    opacity: 1;
+}
+
+/* Grupos com Botões dentro dos Inputs */
+.input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group .btn {
+    border-radius: 0 8px 8px 0;
+    border-left: 0;
+    padding: 0.7rem 1rem;
+    font-weight: 500;
+    background-color: #e7f0fd;
+    border-color: #0d6efd;
+    color: #0d6efd;
+}
+
+.input-group .btn:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+/* Botão de Visualizar Senha */
+.password-toggle {
+    cursor: pointer;
+    color: #0d6efd;
+}
+
+.password-toggle:hover {
+    color: #084298;
+}
+
+/* Feedbacks e Mensagens */
+.invalid-feedback {
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.form-text, #cnpjFeedback, #cepFeedback {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+#passwordStrength {
+    margin-top: 0.5rem;
+}
+
+/* Botão Submit */
+.btn-submit {
+    padding: 0.85rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: #0d6efd;
+    border: none;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+}
+
+.btn-submit .spinner-border {
+    margin-left: 10px;
+}
+
+/* Botão de Login */
+.btn-outline-primary {
+    border-radius: 8px;
+    font-weight: 600;
+    border-color: #0b5ed7;
+    color: #0b5ed7;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0b5ed7;
+    color: #fff;
+}
+
+/* Espaçamento entre Campos */
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+/* Responsividade para Mobile */
+@media (max-width: 768px) {
+    .shared-form-style {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .form-header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-header-container .btn {
+        margin-top: 1rem;
+    }
+}

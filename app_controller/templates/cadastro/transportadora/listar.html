@@ -1,0 +1,261 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Gestão de Vales de Pallet</title>
+</head>
+
+
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar com fontes grandes -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top py-3">
+        <div class="container-fluid px-4">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center active" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-journal-plus me-2" style="font-size: 1.7rem;"></i>
+                            <h5>CADASTROS</h5>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'cliente_cadastrar' %}">
+                                    <i class="bi bi-people me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>CLIENTES</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="{% url 'motorista_cadastrar' %}">
+                                    <i class="bi bi-person-badge me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>MOTORISTAS</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="{% url 'transportadora_cadastrar' %}">
+                                    <i class="bi bi-truck me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>TRANSPORTADORAS</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Novo dropdown de LISTAGENS -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-list-ul me-2" style="font-size: 1.7rem;"></i>
+                            <h5>LISTAGENS</h5>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'cliente_listar' %}">
+                                    <i class="bi bi-people me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>CLIENTES</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'motorista_listar' %}">
+                                    <i class="bi bi-person-badge me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>MOTORISTAS</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="{% url 'transportadora_listar' %}">
+                                    <i class="bi bi-truck me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>TRANSPORTADORAS</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'valepallet_listar' %}">
+                                    <i class="bi bi-receipt me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>VALES DE PALLET</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'valepallet_cadastrar' %}">
+                            <i class="bi bi-receipt me-2" style="font-size: 2rem;"></i>
+                            <h5>VALES</h5>
+                        </a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'movimentacao_listar' %}">
+                            <i class="bi bi-arrow-left-right me-2" style="font-size: 2rem;"></i>
+                            <h5>MOVIMENTAÇÕES</h5>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <!-- Botão de Logout alinhado à direita -->
+                <div class="d-flex align-items-center ms-auto">
+                    {% if user.is_authenticated %}
+                    <div class="dropdown" style="color: white;">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-2" style="font-size: 1.7rem;"></i>
+                            <h5 class="mb-0">{{ user.username|upper }}</h5>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
+                                    <i class="bi bi-box-arrow-right me-2" style="font-size: 1.3rem;"></i>
+                                    <span>Sair</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow-1 py-5">
+        <div class="container-fluid px-5">
+
+            {% block content %}
+            <div class="container-fluid px-4 py-4">
+                <!-- Cabeçalho -->
+                <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap;gap: 5rem;">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-sort-alpha-down"></i> Ordenar
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item sort-option" href="#" data-sort="asc"><i
+                                    class="bi bi-sort-alpha-down"></i> A-Z</a></li>
+                        <li><a class="dropdown-item sort-option" href="#" data-sort="desc"><i
+                                    class="bi bi-sort-alpha-down-alt"></i> Z-A</a></li>
+                    </ul>
+                    <h2><i class="fas fa-truck me-2"></i>Transportadoras</h2>
+                    <a href="{% url 'transportadora_cadastrar' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Nova Transportadora
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- Tabela de Transportadoras -->
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CNPJ</th>
+                                    <th>Telefone</th>
+                                    <th>E-mail</th>
+                                    <th class="text-end">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transportadora in transportadoras %}
+                                <tr>
+                                    <td>{{ transportadora.nome }}</td>
+                                    <td>{{ transportadora.cnpj }}</td>
+                                    <td>{{ transportadora.telefone }}</td>
+                                    <td>{{ transportadora.email }}</td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <a href="{% url 'transportadora_editar' transportadora.id %}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </a>
+                                            {% if user.is_staff %}
+                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalRemover{{ transportadora.id }}">
+                                                <i class="fas fa-trash-alt"></i> Remover
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Modal de Confirmação de Remoção -->
+                                <div class="modal fade" id="modalRemover{{ transportadora.id }}" tabindex="-1"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirmar Remoção</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Tem certeza que deseja remover a transportadora
+                                                    <strong>{{transportadora.nome }}</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                <form action="{% url 'transportadora_remover' transportadora.id %}"
+                                                    method="post" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-danger">Confirmar
+                                                        Remoção</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">Nenhuma transportadora cadastrada</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
+
+        </div>
+    </main>
+
+    <footer class="py-4 mt-auto bg-light" style="width: 100%;">
+        <div style="width: 100%;">
+            <div class="d-flex flex-column flex-md-column justify-content-between align-items-center"
+                style="padding:1% 0; color:white; background-color: black; width: 100%;">
+                <div class="mb-3 mb-md-0">
+                    <p class="mb-0 fw-bold fs-5">
+                        <i class="bi bi-c-circle"></i> SISTEMA DE GESTÃO DE VALES DE PALLET
+                        <span id="current-year"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/tables.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,297 @@
+/* Estilos base - mantendo sua estrutura original */
+.status-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.status-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-display {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.filter-btn.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.chart-container {
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.status-badge {
+    font-size: 0.9rem;
+    padding: 0.35em 0.65em;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.pagination .page-link {
+    color: #0d6efd;
+}
+
+.text-orange {
+    color: #fd7e14;
+}
+
+.sortable-header {
+    cursor: pointer;
+    position: relative;
+}
+
+.sortable-header:hover {
+    background-color: #f8f9fa;
+}
+
+.sorted-asc::after {
+    content: " ↑";
+    font-weight: bold;
+}
+
+.sorted-desc::after {
+    content: " ↓";
+    font-weight: bold;
+}
+
+/* Melhorias para responsividade */
+@media (max-width: 1399.98px) {
+    .value-display {
+        font-size: 2rem;
+    }
+    
+    .card-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .btn-group {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .btn-group .btn {
+        flex: 1 0 auto;
+        min-width: 120px;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Ajustes para tablets */
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .status-card .card-body {
+        padding: 1rem;
+    }
+    
+    .value-display {
+        font-size: 1.8rem;
+    }
+    
+    /* Transforma os filtros em acordeão em telas menores */
+    .filter-section {
+        margin-bottom: 1rem;
+    }
+    
+    .filter-toggle {
+        width: 100%;
+        text-align: left;
+        padding: 0.5rem 1rem;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .filter-content {
+        display: none;
+        padding: 0.5rem;
+        background-color: #f8f9fa;
+        border-radius: 0 0 0.25rem 0.25rem;
+        border: 1px solid #dee2e6;
+        border-top: none;
+    }
+    
+    .filter-content.show {
+        display: block;
+    }
+    
+    /* Ajusta o layout dos cards de status */
+    .status-cards-container .col-md-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Ajustes para mobile */
+    .navbar-nav h5 {
+        font-size: 1rem;
+    }
+    
+    .navbar-nav .bi {
+        font-size: 1.2rem !important;
+    }
+    
+    .value-display {
+        font-size: 1.5rem;
+    }
+    
+    /* Layout de uma coluna */
+    .row > div {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    /* Ajusta o gráfico e a tabela para empilhar */
+    .row .col-md-8, 
+    .row .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    /* Ajusta os botões de filtro para scroll horizontal */
+    .filter-scroll-container {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .filter-scroll-container .btn {
+        flex: 0 0 auto;
+        margin-right: 5px;
+    }
+    
+    /* Esconde os dropdowns originais em mobile */
+    .filter-desktop {
+        display: none;
+    }
+    
+    .filter-mobile {
+        display: block;
+    }
+    
+    /* Ajusta o modal para ocupar toda a tela */
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: none;
+    }
+    
+    .modal-content {
+        height: calc(100vh - 1rem);
+    }
+    
+    .modal-body {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Esconde os controles mobile em desktop */
+    .filter-mobile {
+        display: none;
+    }
+}
+
+/* Estilos para o carrossel de filtros mobile */
+.filter-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.filter-carousel-inner {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.filter-carousel-item {
+    flex: 0 0 100%;
+    padding: 0 10px;
+}
+
+.filter-carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+}
+
+.filter-carousel-control.prev {
+    left: 5px;
+}
+
+.filter-carousel-control.next {
+    right: 5px;
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 575.98px) {
+    .card-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .value-display {
+        font-size: 1.3rem;
+    }
+    
+    .status-card h5.card-title {
+        font-size: 0.9rem;
+    }
+    
+    .status-card small {
+        font-size: 0.7rem;
+    }
+    
+    .table th, .table td {
+        padding: 0.3rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Garante que o footer fique no rodapé */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}

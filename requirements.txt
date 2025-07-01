@@ -1,0 +1,6 @@
+Django==4.2
+psycopg2-binary==2.9.6
+requests==2.31.0
+validate-docbr==1.10.0
+qrcode[pil]==7.4.2
+python-dotenv==1.0.0

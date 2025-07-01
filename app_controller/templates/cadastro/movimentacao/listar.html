@@ -1,0 +1,455 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/mov.css' %}">
+    <title>Gestão de Vales de Pallet</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top py-3">
+        <div class="container-fluid px-4">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center active" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-journal-plus me-2" style="font-size: 1.7rem;"></i>
+                            <h5>CADASTROS</h5>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'cliente_cadastrar' %}">
+                                    <i class="bi bi-people me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>CLIENTES</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="{% url 'motorista_cadastrar' %}">
+                                    <i class="bi bi-person-badge me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>MOTORISTAS</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="{% url 'transportadora_cadastrar' %}">
+                                    <i class="bi bi-truck me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>TRANSPORTADORAS</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-list-ul me-2" style="font-size: 1.7rem;"></i>
+                            <h5>LISTAGENS</h5>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'cliente_listar' %}">
+                                    <i class="bi bi-people me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>CLIENTES</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'motorista_listar' %}">
+                                    <i class="bi bi-person-badge me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>MOTORISTAS</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                    href="{% url 'transportadora_listar' %}">
+                                    <i class="bi bi-truck me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>TRANSPORTADORAS</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'valepallet_listar' %}">
+                                    <i class="bi bi-receipt me-3" style="font-size: 1.7rem;"></i>
+                                    <h5>VALES DE PALLET</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'valepallet_cadastrar' %}">
+                            <i class="bi bi-receipt me-2" style="font-size: 2rem;"></i>
+                            <h5>VALES</h5>
+                        </a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'movimentacao_listar' %}">
+                            <i class="bi bi-arrow-left-right me-2" style="font-size: 2rem;"></i>
+                            <h5>MOVIMENTAÇÕES</h5>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <div class="d-flex align-items-center ms-auto">
+                    {% if user.is_authenticated %}
+                    <div class="dropdown" style="color: white;">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-2" style="font-size: 1.7rem;"></i>
+                            <h5 class="mb-0">{{ user.username|upper }}</h5>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
+                                    <i class="bi bi-box-arrow-right me-2" style="font-size: 1.3rem;"></i>
+                                    <span>Sair</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow-1 py-5">
+        <div class="container-fluid">
+            {% block content %}
+            <div class="container-fluid py-4">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="mb-0">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard de Vales de Pallet
+                        </h2>
+                    </div>
+
+                    <div class="card-body">
+
+
+                       <!-- Filtros -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5 class="filter-title">Filtrar por Status</h5>
+                                <div class="filter-group" role="group" id="filtros-botoes">
+                                    <button type="button" class="btn btn-outline-primary active" data-filtro="todos">Todos</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro="a_vencer">A vencer</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro="no_prazo">No prazo</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro="vencidos">Vencidos</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro="movimentacao">Em movimentação</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="filter-title"style="margin-top:5%">Filtrar por Período</h5>
+                                <div class="filter-group" role="group" id="filtros-data">
+                                    <button type="button" class="btn btn-outline-primary active" data-filtro-data="todos">Todos</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro-data="hoje">Hoje</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro-data="semana">Semana</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro-data="mes">Mês</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro-data="trimestre">Trimestre</button>
+                                    <button type="button" class="btn btn-outline-primary" data-filtro-data="ano">Ano</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <!-- Resumo de Status -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card status-card border-primary">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">A vencer</h5>
+                                        <div class="value-display text-primary" id="a_vencer">{{ a_vencer|default:"0" }}
+                                        </div>
+                                        <small class="text-muted">Vales que vencem em 30 dias</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card status-card border-success">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Coletado</h5>
+                                        <div class="value-display text-success" id="coletado">{{ coletado|default:"0" }}
+                                        </div>
+                                        <small class="text-muted">Vales retornados</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card status-card border-warning">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Pendente</h5>
+                                        <div class="value-display text-warning" id="pendente">{{ pendente|default:"0" }}
+                                        </div>
+                                        <small class="text-muted">Aguardando retirada</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card status-card border-danger">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Vencido</h5>
+                                        <div class="value-display text-danger" id="vencido">{{ vencido|default:"0" }}
+                                        </div>
+                                        <small class="text-muted">Vales não retornados</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cartões de Pallets -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="card-title">Pallets em Movimentação (PBR)</h5>
+                                                <div class="value-display text-primary" id="pallets_movimentacao">{{ pallets_movimentacao }}</div>
+                                                <small class="text-muted">Em processo de retirada</small>
+                                            </div>
+                                            <i class="bi bi-arrow-repeat text-primary" style="font-size: 2rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="card-title">Pallets no Prazo</h5>
+                                                <div class="value-display text-success" id="pallets_prazo">{{ pallets_prazo }}</div>
+                                                <small class="text-muted">Dentro do período válido</small>
+                                            </div>
+                                            <i class="bi bi-check-circle text-success" style="font-size: 2rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="card-title">Pallets Vencidos</h5>
+                                                <div class="value-display text-danger" id="pallets_vencidos">{{ pallets_vencidos }}</div>
+                                                <small class="text-muted">Fora do período válido</small>
+                                            </div>
+                                            <i class="bi bi-exclamation-triangle text-danger"
+                                                style="font-size: 2rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h5 class="card-title">Total de Pallets</h5>
+                                                <div class="value-display text-info" id="total_pallets">{{ total_pallets }}</div>
+                                                <small class="text-muted">Total em sistema</small>
+                                            </div>
+                                            <i class="bi bi-pallet text-info" style="font-size: 2rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gráfico e Tabela -->
+                        <div class="row">
+                            <div class="col-md-8 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">Pallets por cliente</h5>
+                                        <div class="chart-container">
+                                            <canvas id="clientesChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title text-center">Fornecedores</h5>
+                                        <div style="height: 300px; display: flex; flex-direction: column;">
+                                            <div style="overflow-y: auto; flex-grow: 1;">
+                                                <table class="table table-sm mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-start sortable-header"
+                                                                data-sort="responsavel">Responsável</th>
+                                                            <th class="text-center sortable-header" data-sort="vale">
+                                                                Vales</th>
+                                                            <th class="text-center sortable-header" data-sort="pallets">
+                                                                Pallets</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="fornecedoresTableBody">
+                                                        {% for fornecedor in fornecedores_data %}
+                                                        <tr>
+                                                            <td class="text-start">{{ fornecedor.responsavel__username }}</td>
+                                                            <td class="text-center">{{ fornecedor.vale }}</td>
+                                                            <td class="text-center">{{ fornecedor.pallets }}</td>
+                                                        </tr>
+                                                        {% empty %}
+                                                        <tr>
+                                                            <td colspan="3" class="text-center">
+                                                                Nenhum dado disponível
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Linha de Total FIXA no rodapé -->
+                                            <table class="table table-sm mb-0">
+                                                <tbody>
+                                                    {% if fornecedores_data %}
+                                                    <tr class="table-active">
+                                                        <td class="text-start fw-bold">Total</td>
+                                                        <td class="text-center fw-bold" id="total_fornecedores_vales">{{ total_fornecedores.vales }}
+                                                        </td>
+                                                        <td class="text-center fw-bold" id="total_fornecedores_pallets">
+                                                            {{ total_fornecedores.pallets }}
+                                                        </td>
+                                                    </tr>
+                                                    {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dias em Aberto -->
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">&lt;30 dias em aberto</h5>
+                                        <div class="value-display text-primary" id="menos_30_dias">{{ menos_30_dias|default:"0" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">&gt;30 dias em aberto</h5>
+                                        <div class="value-display text-warning" id="mais_30_dias">{{ mais_30_dias|default:"0" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">&gt;90 dias em aberto</h5>
+                                        <div class="value-display text-orange" id="mais_90_dias">{{ mais_90_dias|default:"0" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <div class="card status-card h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">&gt;180 dias em aberto</h5>
+                                        <div class="value-display text-danger" id="mais_180_dias">{{ mais_180_dias|default:"0" }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Modal para exibir lista de vales -->
+    <div class="modal fade" id="valesModal" tabindex="-1" aria-labelledby="valesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="valesModalLabel">Lista de Vales</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="sortable-header" data-sort="vale">Nº Vale</th>
+                                    <th class="sortable-header" data-sort="cliente">Cliente</th>
+                                    <th class="sortable-header" data-sort="transportadora">Transportadora</th>
+                                    <th class="sortable-header" data-sort="motorista">Motorista</th>
+                                    <th class="sortable-header" data-sort="emissao">Emissão</th>
+                                    <th class="sortable-header" data-sort="vencimento">Vencimento</th>
+                                    <th class="sortable-header" data-sort="status">Status</th>
+                                    <th class="sortable-header" data-sort="responsavel">Responsável</th>
+                                </tr>
+                            </thead>
+                            <tbody id="valesTableBody">
+                                <!-- Conteúdo será carregado via AJAX -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 mt-auto bg-light" style="width: 100%;">
+        <div style="width: 100%;">
+            <div class="d-flex flex-column flex-md-column justify-content-between align-items-center"
+                style="padding:1% 0; color:white; background-color: black; width: 100%;">
+                <div class="mb-3 mb-md-0">
+                    <p class="mb-0 fw-bold fs-5">
+                        <i class="bi bi-c-circle"></i> SISTEMA DE GESTÃO DE VALES DE PALLET
+                        <span id="current-year"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.graficoData = {
+            labels: JSON.parse('{{ grafico_labels|escapejs }}'),
+            data: JSON.parse('{{ grafico_data|escapejs }}'),
+            cores: JSON.parse('{{ grafico_cores|escapejs }}')
+        };
+    </script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+
+</html>
