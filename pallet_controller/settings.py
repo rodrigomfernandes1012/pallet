@@ -21,8 +21,8 @@ SECRET_KEY = 'django-insecure-6c!7%^w=v&0++twoi_5d0g5jdy5xvr)35v#dqn7wp#u%j6^3i#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ['ponto.nfiscal.com.br', 'localhost']
 
 # Application definition
 
@@ -141,3 +141,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # Para produção
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
