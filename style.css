@@ -1,0 +1,57 @@
+.home-button {
+    margin-right: 2rem;
+    /* Espaçamento maior à direita */
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Estilo personalizado para o botão Home no footer */
+.home-footer-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #0d6efd;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.home-footer-button:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.home-footer-icon {
+    font-size: 1.8rem;
+}
+
+.home-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.home-icon {
+    font-size: 2rem;
+}
+
+@media (max-width: 992px) {
+    .home-button {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+
+
+
+/* ----------------------
+
